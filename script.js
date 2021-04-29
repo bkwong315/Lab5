@@ -2,15 +2,17 @@
 
 const img = new Image(); // used to load image from <input> and draw to canvas
 const browseBtn = document.getElementById("image-input");
-const form = document.getElementById("generate-meme");
-const resetBtn = document.querySelector('#button-group > button[type="reset"]')
+// Grab the generate button from within the "generate-meme" form. Our generate button is 
+// a direct descendant so we can use > and the button type of submit to find it.
+const generateBtn = document.querySelector('#generate-meme > button[type="submit"]')
+const clearBtn = document.querySelector('#button-group > button[type="reset"]')
+const readTextBtn = document.querySelector('#button-group > button[type="button"]')
+
+const canvas = document.getElementById("user-image");
+const ctx = canvas.getContext("2d");
 
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
-  // TODO
-  let canvas = document.getElementById("user-image");
-  let ctx = canvas.getContext("2d");
-
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if(img.width !== img.height) {
@@ -27,16 +29,54 @@ img.addEventListener('load', () => {
   // - If you draw the image to canvas here, it will update as soon as a new image is selected
 });
 
+// In this case the Change event occurs after we hit the browse button and select our image. 
+// Then the change even happens once the user hits Open.
 browseBtn.addEventListener('change', () => {
   img.src = "images/" + browseBtn.files[0].name;
+  img.alt = browseBtn.files[0].name;
+  canvas.alt = browseBtn.files[0].name;
 })
 
-resetBtn.addEventListener('click', () => {
-  let canvas = document.getElementById("user-image");
-  let ctx = canvas.getContext("2d");
-
+clearBtn.addEventListener('click', () => {
+  clearBtn.disabled = true;
+  readTextBtn.disabled = true;
+  generateBtn.disabled = false;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 })
+
+// Add a listener for when we click on the Generate button.
+generateBtn.addEventListener('click', () => {
+  // Enable Clear and Read-Text buttons
+  clearBtn.disabled = false;
+  readTextBtn.disabled = false;
+  // Disable the Generate button
+  generateBtn.disabled = true;
+  // Disable the refresh on click that would happen by default.
+  event.preventDefault();
+
+  // Grab the text from the TopText box and the BottomText box.
+  let textTop = document.getElementById("text-top");
+  let textBottom = document.getElementById("text-bottom");
+
+  const textTopValue = textTop.value.toUpperCase();
+  const textBottomValue = textBottom.value.toUpperCase();
+
+  ctx.font = "bold 48px sans-serif";
+  ctx.fillStyle = "white";
+  ctx.lineWidth = "2"
+  ctx.textAlign = "center";
+
+  const halfWidth = canvas.width/2;
+
+  ctx.fillText(textTopValue, halfWidth, 50);
+  ctx.fillText(textBottomValue, halfWidth, 375);
+
+
+  ctx.strokeText(textTopValue, halfWidth, 50);
+  ctx.strokeText(textBottomValue, halfWidth, 375);
+})
+
+
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
