@@ -1,13 +1,17 @@
 // script.js
 
 const img = new Image(); // used to load image from <input> and draw to canvas
+const browseBtn = document.getElementById("image-input");
+const form = document.getElementById("generate-meme");
+const resetBtn = document.querySelector('#button-group > button[type="reset"]')
 
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
   // TODO
   let canvas = document.getElementById("user-image");
-  console.log(canvas);
   let ctx = canvas.getContext("2d");
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   if(img.width !== img.height) {
     ctx.fillStyle = "black";
@@ -23,7 +27,16 @@ img.addEventListener('load', () => {
   // - If you draw the image to canvas here, it will update as soon as a new image is selected
 });
 
-img.src = './images/sky.jpg';
+browseBtn.addEventListener('change', () => {
+  img.src = "images/" + browseBtn.files[0].name;
+})
+
+resetBtn.addEventListener('click', () => {
+  let canvas = document.getElementById("user-image");
+  let ctx = canvas.getContext("2d");
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+})
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
