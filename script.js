@@ -104,10 +104,8 @@ generateBtn.addEventListener('click', (event) => {
   ctx.fillText(textTopValue, halfWidth, 50);
   ctx.fillText(textBottomValue, halfWidth, 375);
 
-  if(img.src === "") {
-    ctx.strokeText(textTopValue, halfWidth, 50);
-    ctx.strokeText(textBottomValue, halfWidth, 375);
-  }
+  ctx.strokeText(textTopValue, halfWidth, 50);
+  ctx.strokeText(textBottomValue, halfWidth, 375);
   
   if(voices.length !== 0) {
     for(let i = 1; i < voices.length; i++) {
