@@ -31,15 +31,18 @@ window.onload = () => {
   voiceSelector.disabled = true;
   voices = speechSynthesis.getVoices();
 
-  // If there is at least 1 voice, then the default value will be the first voice from
-  // the getVoices() method call.
-  if(voices.length > 0) {
-    voiceSelector.remove(0);
-    const newVoice = document.createElement("option");
-      newVoice.text = voices[0].name + " -- DEFAULT";
-      newVoice.value = 0;
-      voiceSelector.add(newVoice);
-  }
+  // We're waiting 3 seconds to give speechSynthesis.getVoices() time to work.
+  setTimeout(()=> {
+    // If there is at least 1 voice, then the default value will be the first voice from
+    // the getVoices() method call.
+    if(voices.length > 0) {
+      voiceSelector.remove(0);
+      const newVoice = document.createElement("option");
+        newVoice.text = voices[0].name + " -- DEFAULT";
+        newVoice.value = 0;
+        voiceSelector.add(newVoice);
+    }
+  }, 3000)
 }
 
 // Fires whenever the img object loads a new image (such as with img.src =)
