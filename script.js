@@ -63,7 +63,8 @@ img.addEventListener('load', () => {
 // In this case the Change event occurs after we hit the browse button and select our image. 
 // Then the change even happens once the user hits Open.
 browseBtn.addEventListener('change', () => {
-  img.src = "images/" + browseBtn.files[0].name;
+  const url = URL.createObjectURL(browseBtn.files[0]);
+  img.src = url;
   img.alt = browseBtn.files[0].name;
   canvas.alt = browseBtn.files[0].name;
 })
