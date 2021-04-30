@@ -10,4 +10,4 @@ https://bkwong315.github.io/Lab5/
 
 ## Part 2:
 
-LINK TO YOUR PART 2 REPOSITORY
+https://github.com/bkwong315/github-actions-for-ci
