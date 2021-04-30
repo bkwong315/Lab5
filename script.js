@@ -42,20 +42,9 @@ window.onload = () => {
   }
 }
 
-const canvas = document.getElementById("user-image");
-const ctx = canvas.getContext("2d");
-
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  if(img.width !== img.height) {
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  }
-
-  let dimensions = getDimmensions(canvas.width, canvas.height, img.width, img.height);
-
 
   if(img.width !== img.height) {
     ctx.fillStyle = "black";
@@ -97,18 +86,6 @@ generateBtn.addEventListener('click', (event) => {
   voiceSelector.disabled = false;
   // Disable the Generate button
   generateBtn.disabled = true;
-generateBtn.addEventListener('click', () => {
-  // Enable Clear and Read-Text buttons
-  clearBtn.disabled = false;
-  readTextBtn.disabled = false;
-  // Disable the Generate button
-  generateBtn.disabled = true;
-  // Disable the refresh on click that would happen by default.
-  event.preventDefault();
-
-  // Grab the text from the TopText box and the BottomText box.
-  let textTop = document.getElementById("text-top");
-  let textBottom = document.getElementById("text-bottom");
 
   const textTopValue = textTop.value.toUpperCase();
   const textBottomValue = textBottom.value.toUpperCase();
@@ -165,10 +142,6 @@ volSlider.addEventListener('input', () => {
     // When muted change the icon to the mute.
     volIcon.src = "icons/volume-level-0.svg"
   }
-})
-
-  ctx.strokeText(textTopValue, halfWidth, 50);
-  ctx.strokeText(textBottomValue, halfWidth, 375);
 })
 
 /**
