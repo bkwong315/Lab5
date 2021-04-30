@@ -1,11 +1,12 @@
 # CSE110 SP21 Lab 5
 
 ## Author(s):
-- YOUR NAME
+- Jesse Wolf - A16612194 - jtwolf@ucsd.edu
+- Brian Wong - A15546683 - bkwong@ucsd.edu
 
 ## Part 1:
 
-LINK TO YOUR PUBLISHED SITE
+https://bkwong315.github.io/Lab5/
 
 ## Part 2:
 
