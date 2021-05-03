@@ -20,6 +20,33 @@ let voices;
 const canvas = document.getElementById("user-image");
 const ctx = canvas.getContext("2d");
 
+/* 
+ ############################################################################################
+ Code below was from the MDN documentation for SpeechSynthesis.getVoices() with some editting
+ ############################################################################################
+*/
+function populateVoiceList() {
+  if(typeof speechSynthesis === 'undefined') {
+    return;
+  }
+
+  voices = speechSynthesis.getVoices();
+}
+
+populateVoiceList();
+if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+/* 
+ ############################################################################################
+ Code above was from the MDN documentation for SpeechSynthesis.getVoices() with some editting
+ ############################################################################################
+*/
+
+function getTheVoices() {
+  voices = speechSynthesis.getVoices();
+}
+
 // Resets the form elements back to default when the page is refreshed. We're using 
 // window.onload instead of document.onload because window.onload waits for all the 
 // elements to load before running the function.
@@ -38,9 +65,10 @@ window.onload = () => {
     if(voices.length > 0) {
       voiceSelector.remove(0);
       const newVoice = document.createElement("option");
-        newVoice.text = voices[0].name + " -- DEFAULT";
+        newVoice.text = voices[0].name + " (" + voices[0].lang + ")" + " -- DEFAULT";
         newVoice.value = 0;
         voiceSelector.add(newVoice);
+        console.log(newVoice);
     }
   }, 3000)
 }
@@ -110,7 +138,13 @@ generateBtn.addEventListener('click', (event) => {
   if(voices.length !== 0) {
     for(let i = 1; i < voices.length; i++) {
       const newVoice = document.createElement("option");
-      newVoice.text = voices[i].name;
+
+      if(voices[i].default) {
+        newVoice.textContent += voices[i].lang;
+        newVoice.textContent += " -- DEFAULT";
+      }
+
+      newVoice.text = voices[i].name + " (" + voices[i].lang + ")";
       newVoice.value = i;
       voiceSelector.add(newVoice);
     }
